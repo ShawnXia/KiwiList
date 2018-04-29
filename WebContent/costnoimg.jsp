@@ -6,6 +6,7 @@
 
 <%
 	Logging log = new Logging(request, "代理查价页-无字版");
+	String rootPath = "https://github.com/ShawnXia/KiwiListImg/raw/master/";
 	new Thread(log).start();
 	//未登录则跳转回登录页面
 	String username = "";
@@ -22,7 +23,7 @@
 		System.out.println("代理登录 ： "+username);
 	}
 
-	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/总表.xls";
+	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/main.xls";
 	ReadExcel re = new ReadExcel(excelPath);
 	HashMap<String, Integer> titleMap = re.getTitleMap(0);
 	HashMap<String, ArrayList<HashMap<String, String>>> listMap = re.getDetailMap("Cost", 2, titleMap);
@@ -69,7 +70,7 @@
 
 			htmlContent += "<p class=\'mui-text-remark\'>规格:" + productMap.get("规格") + "</p>";
 			if (tagImg != null) {
-				htmlContent += "<img class='mui-media-tag mui-pull-right'src='./img/" + tagImg + "'>";
+				htmlContent += "<img class='mui-media-tag mui-pull-right'src='" + rootPath + "img/" + tagImg + "'>";
 			}
 			htmlContent += "<p class=\'mui-text-red\'>" + "<font color='#23b579'>产品成本价：$"
 					+ productMap.get("产品成本价") + "&nbsp;&nbsp;&nbsp;含邮成本价：¥" + productMap.get("实际成本（包邮）")

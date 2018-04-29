@@ -2,16 +2,22 @@
         pageEncoding="UTF-8"%>
 <%@ page import="ReadExcel.ReadExcel"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.net.*"%>
+<%@ page import="java.io.*"%>
+<%@ page import="org.apache.commons.io.*"%>
+
 <%@ page import="Public.Logging"%>
 
 <%
 	Logging log = new Logging(request, "产品列表页-图文版");
 	new Thread(log).start();
+	String rootPath = "https://github.com/ShawnXia/KiwiListImg/raw/master/";
 	//HttpSession session = request.getSession();
-	ServletContext sc = session.getServletContext();
-	String excelPath = sc.getRealPath("main.xls");
+	//ServletContext sc = session.getServletContext();
+	//FileUtils.copyURLToFile(new URL(rootPath+"main.xls"), new File("./main.xls"));
+	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/main.xls";
 	ReadExcel re = new ReadExcel(excelPath);
-	//System.out.println(excelPath);
+	System.out.println(excelPath);
 	HashMap<String, Integer> titleMap = re.getTitleMap(0);
 	HashMap<String, ArrayList<HashMap<String, String>>> listMap = re.getDetailMap("Cost", 2, titleMap);
 	Set<String> categorySet = new HashSet<String>(listMap.keySet());
@@ -52,13 +58,13 @@
 
 			htmlContent += "<li class='mui-table-view-cell " + backgroundColor + "'>";
 			htmlContent += "<a href='javascript:;'><img class='mui-media-object mui-pull-left'"
-					+ "src='./img/product/" + productMap.get("商品图片") + ".png'><div class='mui-media-body'>"
+					+ "src='"+rootPath +"img/product/" + productMap.get("商品图片") + ".png'><div class='mui-media-body'>"
 					+ "<p class=\'mui-text-title\'>" + productMap.get("品牌") + productMap.get("名称")
 					+ productMap.get("子分类") + "</p>" + "<p class=\'mui-text-detail\'>" + productMap.get("简述")
 					+ "</p></div>" + "<p class=\'mui-text-remark\'>规格:" + productMap.get("规格") + "</p>";
 
 			if (tagImg != null) {
-				htmlContent += "<img class='mui-media-tag mui-pull-right'src='./img/" + tagImg + "'>";
+				htmlContent += "<img class='mui-media-tag mui-pull-right'src='" + rootPath + "img/" + tagImg + "'>";
 			}
 
 			htmlContent += "<p class=\'mui-text-red\'>" + "包邮价：<s><font color='#222222'>¥"
@@ -8807,32 +8813,32 @@ ul.ui.list {
 		<div class="mui-slider-group mui-slider-loop">
 			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 			<div class="mui-slider-item mui-slider-item-duplicate">
-				<a href="#"> <img src="./img/slide/slide1.jpg">
+				<a href="#"> <img src="<%=rootPath%>img/slide/slide1.jpg">
 				</a>
 			</div>
 			<!-- 第一张 -->
 			<div class="mui-slider-item">
-				<a href="#"> <img src="./img/slide/slide1.jpg">
+				<a href="#"> <img src="<%=rootPath%>img/slide/slide1.jpg">
 				</a>
 			</div>
 			<!-- 第二张 -->
 			<div class="mui-slider-item">
-				<a href="#"> <img src="./img/slide/slide2.jpg">
+				<a href="#"> <img src="<%=rootPath%>img/slide/slide2.jpg">
 				</a>
 			</div>
 			<!-- 第三张 -->
 			<div class="mui-slider-item">
-				<a href="#"> <img src="./img/slide/slide3.jpg">
+				<a href="#"> <img src="<%=rootPath%>img/slide/slide3.jpg">
 				</a>
 			</div>
 			<!-- 第四张 -->
 			<div class="mui-slider-item">
-				<a href="#"> <img src="./img/slide/slide4.jpg">
+				<a href="#"> <img src="<%=rootPath%>img/slide/slide4.jpg">
 				</a>
 			</div>
 			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 			<div class="mui-slider-item mui-slider-item-duplicate">
-				<a href="#"> <img src="./img/slide/slide1.jpg">
+				<a href="#"> <img src="<%=rootPath%>img/slide/slide1.jpg">
 				</a>
 			</div>
 		</div>

@@ -7,7 +7,8 @@
 <%
 	Logging log = new Logging(request, "产品列表页-无图版");
 	new Thread(log).start();
-	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/总表.xls";
+	String rootPath = "https://github.com/ShawnXia/KiwiListImg/raw/master/";
+	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/main.xls";
 	ReadExcel re = new ReadExcel(excelPath);
 	//System.out.println(excelPath);
 	HashMap<String, Integer> titleMap = re.getTitleMap(0);
@@ -55,7 +56,7 @@
 					+ "</p></div>" + "<p class=\'mui-text-remark\'>规格:" + productMap.get("规格") + "</p>";
 
 			if (tagImg != null) {
-				htmlContent += "<img class='mui-media-tag mui-pull-right'src='./img/" + tagImg + "'>";
+				htmlContent += "<img class='mui-media-tag mui-pull-right'src='" + rootPath + "img/" + tagImg + "'>";
 			}
 
 			htmlContent += "<p class=\'mui-text-red\'>" + "包邮价：<s><font color='#222222'>¥"
