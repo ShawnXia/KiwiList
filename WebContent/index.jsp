@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+        pageEncoding="UTF-8"%>
 <%@ page import="ReadExcel.ReadExcel"%>
 <%@ page import="java.util.*"%>
 <%@ page import="Public.Logging"%>
@@ -7,7 +7,9 @@
 <%
 	Logging log = new Logging(request, "产品列表页-图文版");
 	new Thread(log).start();
-	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/总表.xls";
+	//HttpSession session = request.getSession();
+	ServletContext sc = session.getServletContext();
+	String excelPath = sc.getRealPath("main.xls");
 	ReadExcel re = new ReadExcel(excelPath);
 	//System.out.println(excelPath);
 	HashMap<String, Integer> titleMap = re.getTitleMap(0);
@@ -49,8 +51,8 @@
 			}
 
 			htmlContent += "<li class='mui-table-view-cell " + backgroundColor + "'>";
-			htmlContent += "<a href='javascript:;'><img class='mui-media-object mui-pull-left'" + "src='./img/product/"
-					+ productMap.get("商品图片") + ".png'><div class='mui-media-body'>"
+			htmlContent += "<a href='javascript:;'><img class='mui-media-object mui-pull-left'"
+					+ "src='./img/product/" + productMap.get("商品图片") + ".png'><div class='mui-media-body'>"
 					+ "<p class=\'mui-text-title\'>" + productMap.get("品牌") + productMap.get("名称")
 					+ productMap.get("子分类") + "</p>" + "<p class=\'mui-text-detail\'>" + productMap.get("简述")
 					+ "</p></div>" + "<p class=\'mui-text-remark\'>规格:" + productMap.get("规格") + "</p>";
