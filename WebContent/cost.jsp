@@ -23,7 +23,7 @@
 		System.out.println("代理登录 ： "+username);
 	}
 
-	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/index.xls";
+	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/main.xls";
 	ReadExcel re = new ReadExcel(excelPath);
 	HashMap<String, Integer> titleMap = re.getTitleMap(0);
 	HashMap<String, ArrayList<HashMap<String, String>>> listMap = re.getDetailMap("Cost", 2, titleMap);
