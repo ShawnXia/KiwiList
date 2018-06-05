@@ -27,7 +27,7 @@ if(request.getParameter("name")!=null&&request.getParameter("pass")!=null){
 			
 		}
 		else{
-			response.sendRedirect("cost.htm");
+			response.sendRedirect("cost.htm?name="+name);
 		}
 	}else{
 		success = false;
