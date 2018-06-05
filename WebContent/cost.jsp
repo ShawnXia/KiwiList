@@ -10,6 +10,8 @@
 	new Thread(log).start();
 	//未登录则跳转回登录页面
 	String username = "";
+    if (request.getParameter("name") != null)
+    	session.setAttribute("name", request.getParameter("name"));
 	if (session.getAttribute("name") == null) {
 		StringBuffer url = request.getRequestURL();
 		if (request.getQueryString() != null) {
