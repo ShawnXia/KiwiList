@@ -8,20 +8,27 @@
 	Logging log = new Logging(request, "代理查价页-图文版");
 	String rootPath = "https://github.com/ShawnXia/KiwiListImg/raw/master/";
 	new Thread(log).start();
+	
+	Cookie cookie = null; 
+	String username = null;
+    for (Cookie c : request.getCookies()) {
+       if (c.getName().equals("name")){
+                cookie = c;
+                username = c.getValue();
+           }
+       }
+    response.addCookie(cookie);
+             
 	//未登录则跳转回登录页面
-	String username = "";
-    if (request.getParameter("name") != null)
-    	session.setAttribute("name", request.getParameter("name"));
-	if (session.getAttribute("name") == null) {
+	if (username == null||username.equals("")) {
 		StringBuffer url = request.getRequestURL();
 		if (request.getQueryString() != null) {
 			url.append('?');
 			url.append(request.getQueryString());
 		}
-		session.setAttribute("url", url);
+		response.addCookie(new Cookie("url", url.toString()));
 		response.sendRedirect("login.htm");
 	} else {
-		username = session.getAttribute("name").toString();
 		System.out.println("代理登录 ： "+username);
 	}
 

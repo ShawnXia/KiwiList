@@ -6,11 +6,24 @@
 <%
 
 String filePath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/user.txt";
-session.removeAttribute("name");
-String name = "";
+
+String url = null;
+//清除Cookie中name信息及获取previous url
+for (Cookie cookie : request.getCookies()) {
+    if(cookie.getName().equals("name")){
+        cookie.setValue("");
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
+    if(cookie.getName().equals("url"))
+        url = cookie.getValue();
+}
+
+String name = null;
 if (request.getParameter("name") != null)
 	name = request.getParameter("name");
-String pass = "";
+String pass = null;
 if (request.getParameter("pass") != null)
 	pass = request.getParameter("pass");
 boolean success = true;
@@ -19,15 +32,15 @@ if(request.getParameter("name")!=null&&request.getParameter("pass")!=null){
 	UserInfo info = new UserInfo(filePath);
 	
 	if(info.verifyUser(name,pass)){
-		session.setAttribute("name", name);
+		response.addCookie(new Cookie("name", name));
 
 		//若用户有历史访问页面
-		if(session.getAttribute("url")!=null){
-			response.sendRedirect(session.getAttribute("url").toString());
+		if(url!=null){
+			response.sendRedirect(url);
 			
 		}
 		else{
-			response.sendRedirect("cost.htm?name="+name);
+			response.sendRedirect("cost.htm");
 		}
 	}else{
 		success = false;
