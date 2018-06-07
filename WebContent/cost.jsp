@@ -15,9 +15,10 @@
        if (c.getName().equals("name")){
                 cookie = c;
                 username = c.getValue();
+                response.addCookie(cookie);
            }
        }
-    response.addCookie(cookie);
+    
              
 	//未登录则跳转回登录页面
 	if (username == null||username.equals("")) {
