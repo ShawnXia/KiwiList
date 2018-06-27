@@ -8,22 +8,32 @@
 	Logging log = new Logging(request, "代理查价页-图文版");
 	String rootPath = "https://github.com/ShawnXia/KiwiListImg/raw/master/";
 	new Thread(log).start();
+	
+	Cookie cookie = null; 
+	String username = null;
+    for (Cookie c : request.getCookies()) {
+       if (c.getName().equals("name")){
+                cookie = c;
+                username = c.getValue();
+                response.addCookie(cookie);
+           }
+       }
+    
+             
 	//未登录则跳转回登录页面
-	String username = "";
-	if (session.getAttribute("name") == null) {
+	if (username == null||username.equals("")) {
 		StringBuffer url = request.getRequestURL();
 		if (request.getQueryString() != null) {
 			url.append('?');
 			url.append(request.getQueryString());
 		}
-		session.setAttribute("url", url);
+		response.addCookie(new Cookie("url", url.toString()));
 		response.sendRedirect("login.htm");
 	} else {
-		username = session.getAttribute("name").toString();
 		System.out.println("代理登录 ： "+username);
 	}
 
-	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/index.xls";
+	String excelPath = new java.io.File(application.getRealPath("index.htm")).getParent() + "/main.xls";
 	ReadExcel re = new ReadExcel(excelPath);
 	HashMap<String, Integer> titleMap = re.getTitleMap(0);
 	HashMap<String, ArrayList<HashMap<String, String>>> listMap = re.getDetailMap("Cost", 2, titleMap);
